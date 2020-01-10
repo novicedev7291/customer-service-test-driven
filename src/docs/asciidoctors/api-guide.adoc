@@ -1,0 +1,66 @@
+= Customers Api Guide V1
+:doctype: book
+:toc:
+:sectanchors:
+:sectlinks:
+:toclevels: 4
+:source-highlighter: highlightjs
+:snippets: ../../../target/snippets
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP Verbs
+
+The customers API follows the standard HTTP Rest conventions and support following verbs
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource(s)
+
+| `POST`
+| Used to create a resource(s)
+
+| `PUT`
+| Used to update a resource(s)
+
+| `DELETE`
+| Used to delete a resource(s)
+|===
+
+
+[[overview-http-status-code]]
+== HTTP status codes
+
+The customer api uses following http status codes.
+
+|===
+| Status code | Usage
+
+|`200`
+|Status ok
+|===
+
+
+[[Resources]]
+== Resources
+The customer resources is used to list all customers and a customer by ID.
+
+
+[[resource-customer-list]]
+=== Listing customers
+
+A `GET` request will list all customers.
+
+.list all customers using `curl`
+include::{snippets}/customers/curl-request.adoc[]
+
+.list all customers using `http`
+include::{snippets}/customers/httpie-request.adoc[]
+
+.the response from the `/customers` endpoint.
+include::{snippets}/customers/response-body.adoc[]
+

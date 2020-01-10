@@ -4,10 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,6 +26,7 @@ import static org.mockito.Mockito.when;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@AutoConfigureRestDocs(outputDir = "target/snippets")
 @AutoConfigureMockMvc
 public class CustomerRestControllerTest {
 
@@ -41,7 +45,8 @@ public class CustomerRestControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/customers/1"))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("@.id").value(1L));
+                .andExpect(MockMvcResultMatchers.jsonPath("@.id").value(1L))
+                .andDo(MockMvcRestDocumentation.document("customer-by-id"));
     }
 
     @Test
@@ -58,7 +63,8 @@ public class CustomerRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("@[0].last").value("last"))
                 .andExpect(MockMvcResultMatchers.jsonPath("@[0].email").value("first@email.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath("@[1].id").value(2L))
-                .andExpect(MockMvcResultMatchers.jsonPath("@[1].email").value("second@email.com"));
+                .andExpect(MockMvcResultMatchers.jsonPath("@[1].email").value("second@email.com"))
+                .andDo(MockMvcRestDocumentation.document("customers"));
 
     }
 }
