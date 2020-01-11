@@ -18,6 +18,7 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2.2.1.RELEASE</spring-cloud.version>
 		<snippetsDirectory>${project.build.directory}/snippets</snippetsDirectory>
+		<spring.cloud.contract.verifier.jar.skip>true</spring.cloud.contract.verifier.jar.skip>
 	</properties>
 
 	<dependencies>
@@ -72,6 +73,28 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>assembly-package</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<attach>true</attach>
+							<descriptors>
+								<descriptor>
+									${basedir}/src/assembly/stubs.xml
+								</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
